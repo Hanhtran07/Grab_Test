@@ -21,7 +21,7 @@ select TOP 5  merchant_id,(basket_size - commission_from_merchant)as earningmerc
 from [Store Project].[dbo].[GRAB_RAWDATA] 
 where Month(convert(Date,Time_Order))= '01'
 order by (basket_size - commission_from_merchant) DESC 
-
+-- cách 2--
 select distinct merchant_id, rank()over(partition by merchant_id order by basket_size - commission_from_merchant DESC) as rank_row, (basket_size - commission_from_merchant)as earningmerchant
 from [Store Project].[dbo].[GRAB_RAWDATA] 
 where Month(convert(Date,Time_Order))= '01'
@@ -35,7 +35,7 @@ With Rank_basket as (select order_id,user_id, Time_Order, basket_size,Rank() OVE
 from [Store Project].[dbo].[GRAB_RAWDATA])
 select* from Rank_basket
 where rank_basket=2
-
+--cách 2-- 
 With A as (
 select order_id, user_id, Time_Order, basket_size, RANK() OVER(partition by user_id order by basket_size DESC) as rank_row
 from [Store Project].[dbo].[GRAB_RAWDATA] )
